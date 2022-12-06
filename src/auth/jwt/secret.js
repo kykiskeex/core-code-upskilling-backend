@@ -1,0 +1,8 @@
+const secret = {
+    keyToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJ1c2VyTmFtZSI6ImN1ZWxsYXIuZ3VhcmRhZG9AZ21haWwuY29tIiwiaWF0IjoxNTQzNDQ0ODA3LCJleHAiOjE1NDM0NDQ5MDd9sQA58OATqQUsoGPCIrPWOHNdUBbpVwTvTaTlO3bTio0",
+    keyRefreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJ1c2VyTmFtZSI6ImN1ZWxsYXIuZ3VhcmRhZG9AZ21haWwuY29tIiwidHlwZSI6IlJlZnJlc2ggVG9rZW4iLCJpYXQiOjE1NDM0NDc3NzIsImV4cCI6MTU0NDA1MjU3Mn0WoOhI3hmqnDX-bf_jlzYgImLo6mtXhAY1_2jX_7hXEI",
+    tokenExpired: "1d",
+    refreshTokenExpired: "7d"
+}
+
+module.exports=secret;

@@ -1,0 +1,128 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema codecodeproject
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema codecodeproject
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `codecodeproject` DEFAULT CHARACTER SET latin1 ;
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+USE `codecodeproject` ;
+
+-- -----------------------------------------------------
+-- Table `codecodeproject`.`bank_accounts`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `codecodeproject`.`bank_accounts` (
+  `bank_account` VARCHAR(20) NOT NULL,
+  `owner_name` VARCHAR(200) NOT NULL,
+  `username` VARCHAR(20) NOT NULL,
+  `currency` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`bank_account`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `codecodeproject`.`categories`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `codecodeproject`.`categories` (
+  `category_id` INT(11) NOT NULL,
+  `description` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`category_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `codecodeproject`.`currencies`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `codecodeproject`.`currencies` (
+  `currency_name` VARCHAR(20) NOT NULL,
+  `description` VARCHAR(45) NULL DEFAULT NULL,
+  `symbol` VARCHAR(2) NOT NULL,
+  PRIMARY KEY (`currency_name`, `symbol`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `codecodeproject`.`exchange_rates`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `codecodeproject`.`exchange_rates` (
+  `idexchange_rates` INT(11) NOT NULL,
+  `currency_origin` VARCHAR(20) NULL DEFAULT NULL,
+  `currency_exchange` VARCHAR(45) NULL DEFAULT NULL,
+  `rate` DECIMAL(16,2) NULL DEFAULT NULL,
+  PRIMARY KEY (`idexchange_rates`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `codecodeproject`.`transactions`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `codecodeproject`.`transactions` (
+  `idtransaction` INT(11) NOT NULL AUTO_INCREMENT,
+  `bank_account_origin` VARCHAR(20) NOT NULL,
+  `amount` DECIMAL(16,2) NOT NULL,
+  `type` INT(11) NOT NULL,
+  `category_id` INT(11) NOT NULL,
+  `currency_transaction` VARCHAR(20) NULL DEFAULT NULL,
+  `date` DATETIME NOT NULL,
+  `bank_account_destiny` VARCHAR(20) NULL DEFAULT NULL,
+  `exchange_rate` DECIMAL(16,2) NULL DEFAULT NULL,
+  PRIMARY KEY (`idtransaction`),
+  INDEX `FK_bank_origin_idx` (`bank_account_origin` ASC),
+  INDEX `FK_bank_destiny_idx` (`bank_account_destiny` ASC),
+  INDEX `FK_currrency_origin_idx` (`currency_transaction` ASC),
+  INDEX `FK_category_id_idx` (`category_id` ASC),
+  CONSTRAINT `FK_bank_destiny`
+    FOREIGN KEY (`bank_account_destiny`)
+    REFERENCES `codecodeproject`.`bank_accounts` (`bank_account`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_bank_origin`
+    FOREIGN KEY (`bank_account_origin`)
+    REFERENCES `codecodeproject`.`bank_accounts` (`bank_account`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_category_id`
+    FOREIGN KEY (`category_id`)
+    REFERENCES `codecodeproject`.`categories` (`category_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_currrency_origin`
+    FOREIGN KEY (`currency_transaction`)
+    REFERENCES `codecodeproject`.`currencies` (`currency_name`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `codecodeproject`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `codecodeproject`.`users` (
+  `username` VARCHAR(20) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(200) NULL DEFAULT NULL,
+  `email` VARCHAR(45) NULL DEFAULT NULL,
+  `rol` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`username`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
